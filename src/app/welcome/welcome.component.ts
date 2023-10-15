@@ -6,7 +6,13 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent implements OnInit {
+  userName: string = ''
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  startQuiz() {
+    alert(this.userName)
+  }
 }
