@@ -23,13 +23,32 @@ export class QuestionComponent implements OnInit {
   faReset = faRefresh
   questionsList: Array<question> = []
   current: number = 0
+  currentQuestion: number = 1
 
   constructor(private questionsService: QuestionsService) {}
 
   ngOnInit(): void {
+    console.log(this.questionsList[this.current])
     this.questionsService.getQuestionsJson().subscribe((res) => {
       this.questionsList = res.questions
-      console.log(this.questionsList)
     })
+  }
+
+  prevQuestion(): void {
+    this.currentQuestion--
+    this.current = this.current > 0 ? this.current - 1 : 0
+  }
+
+  resetQuiz(): void {
+    this.currentQuestion = 1
+    this.current = 0
+  }
+
+  nextQuestion(): void {
+    this.currentQuestion++
+    this.current =
+      this.current < this.questionsList.length - 1
+        ? this.current + 1
+        : this.current
   }
 }
