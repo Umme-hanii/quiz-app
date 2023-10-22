@@ -18,7 +18,14 @@
       {{ questionsList[current].questionText }}
     </p>
     <div *ngFor="let option of questionsList[current].options">
-      <p class="p-3 m-2 border border-gray-300">{{ option.text }}</p>
+      <p
+        class="p-3 m-2 border border-gray-300"
+        appBgchange
+        [isCorrect]="option.correct"
+        [ngClass]="{ correct: correctAnswer }"
+      >
+        {{ option.text }}
+      </p>
     </div>
     <div class="mt-2 p-5 flex justify-around">
       <button (click)="prevQuestion()" [disabled]="current === 0">
