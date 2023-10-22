@@ -10,25 +10,30 @@
   </div>
   <div class="p-5 flex justify-between border-b-2 border-b-gray-300">
     <p>0 points</p>
-    <p>{{ currentQuestion }} of {{ questionsList.length }} questions</p>
+    <p>
+      Question {{ currentQuestion + 1 }} of {{ questionsList.length }} questions
+    </p>
     <p>59 sec</p>
   </div>
-  <div class="p-2" *ngIf="questionsList[current]">
+  <div class="p-2" *ngIf="questionsList[currentQuestion]">
     <p class="p-4 border border-gray-300 m-2">
-      {{ questionsList[current].questionText }}
+      {{ questionsList[currentQuestion].questionText }}
     </p>
-    <div *ngFor="let option of questionsList[current].options">
-      <p
+    <ol
+      *ngFor="let option of questionsList[currentQuestion].options"
+      (click)="verifyAnswer()"
+    >
+      <li
         class="p-3 m-2 border border-gray-300"
         appBgchange
         [isCorrect]="option.correct"
         [ngClass]="{ correct: correctAnswer }"
       >
         {{ option.text }}
-      </p>
-    </div>
+      </li>
+    </ol>
     <div class="mt-2 p-5 flex justify-around">
-      <button (click)="prevQuestion()" [disabled]="current === 0">
+      <button (click)="prevQuestion()" [disabled]="currentQuestion === 0">
         <fa-icon [icon]="faPrev"></fa-icon>
       </button>
       <button (click)="resetQuiz()">
@@ -36,7 +41,7 @@
       </button>
       <button
         (click)="nextQuestion()"
-        [disabled]="current === questionsList.length - 1"
+        [disabled]="currentQuestion === questionsList.length - 1"
       >
         <fa-icon [icon]="faNext"></fa-icon>
       </button>

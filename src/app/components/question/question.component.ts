@@ -26,14 +26,12 @@ export class QuestionComponent implements OnInit {
   faNext = faCaretRight
   faReset = faRefresh
   questionsList: Array<question> = []
-  current: number = 0
-  currentQuestion: number = 1
+  currentQuestion: number = 0
   correctAnswer: boolean = false
 
   constructor(private questionsService: QuestionsService) {}
 
   ngOnInit(): void {
-    console.log(this.questionsList[this.current])
     this.questionsService.getQuestionsJson().subscribe((res) => {
       this.questionsList = res.questions
     })
@@ -41,29 +39,15 @@ export class QuestionComponent implements OnInit {
 
   prevQuestion(): void {
     this.currentQuestion--
-    this.current = this.current > 0 ? this.current - 1 : 0
   }
 
   resetQuiz(): void {
-    this.currentQuestion = 1
-    this.current = 0
+    this.currentQuestion = 0
   }
 
   nextQuestion(): void {
     this.currentQuestion++
-    this.current =
-      this.current < this.questionsList.length - 1
-        ? this.current + 1
-        : this.current
   }
 
-  verifyAnswer(selectedOption: option): void {
-    if (selectedOption.correct) {
-      this.correctAnswer = true
-      console.log('correct answer')
-    } else {
-      console.log('wrong answer')
-      this.correctAnswer = false
-    }
-  }
+  verifyAnswer(): void {}
 }
