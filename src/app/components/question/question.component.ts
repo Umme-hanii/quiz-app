@@ -27,7 +27,11 @@ export class QuestionComponent implements OnInit {
   faReset = faRefresh
   questionsList: Array<question> = []
   currentQuestion: number = 0
-  correctAnswer: boolean = false
+  correctOption: boolean = false
+  isQuizCompleted: boolean = false
+  points: number = 0
+  correctAnswers: number = 0
+  inCorrectAnswers: number = 0
 
   constructor(private questionsService: QuestionsService) {}
 
@@ -43,11 +47,25 @@ export class QuestionComponent implements OnInit {
 
   resetQuiz(): void {
     this.currentQuestion = 0
+    this.points = 0
+    this.correctAnswers = 0
+    this.inCorrectAnswers = 0
   }
 
   nextQuestion(): void {
     this.currentQuestion++
   }
 
-  verifyAnswer(): void {}
+  verifyAnswer(option: option): void {
+    if (this.currentQuestion === this.questionsList.length - 1)
+      this.isQuizCompleted = true
+
+    if (option.correct) {
+      this.points += 10
+      this.correctAnswers++
+    } else {
+      this.points -= 10
+      this.inCorrectAnswers++
+    }
+  }
 }
